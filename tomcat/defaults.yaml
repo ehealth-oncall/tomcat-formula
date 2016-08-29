@@ -38,4 +38,3 @@ tomcat:
     sslProtocol: TLSv1.2
     keystoreFile: ''
     keystorePass: ''
-
