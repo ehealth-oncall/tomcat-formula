@@ -72,7 +72,7 @@ copy default-conf to instance {{ instance_name }}:
     - require_in:
       - file: server_xml {{ instance_name }}    
 
-server_xml  {{ instance_name }}:
+server_xml {{ instance_name }}:
   file.managed:
     - name: {{ tomcat.instances_base }}/{{ instance_name }}/conf/server.xml
     - source: salt://tomcat/files/server.xml
@@ -85,7 +85,7 @@ server_xml  {{ instance_name }}:
     - watch_in:
       - service: tomcat service {{ instance.service }}      
 
-Link tomcat manager to source:
+Link tomcat manager to source for {{ instance_name }}:
   file.symlink:
     - name: {{ tomcat.instances_base }}/{{ instance_name }}/webapps/manager
     - target: /var/lib/tomcat/webapps/manager
@@ -94,9 +94,9 @@ Link tomcat manager to source:
     - require:
       - pkg: {{ tomcat.manager_pkg }}
 
-Link tomcat-users.xml to source:
+Link tomcat-users.xml to source for {{ instance_name }}:
   file.symlink:
-    - name: {{ tomcat.c_base }}/conf/tomcat-users.xml
+    - name: {{ tomcat.instances_base }}/{{ instance_name }}/conf/tomcat-users.xml
     - target: {{ tomcat.conf_dir }}/tomcat-users.xml
     - user: tomcat
     - group: tomcat
@@ -111,7 +111,7 @@ Link tomcat-users.xml to source:
 
 {% endfor %}
 
-  
+
 
 {% if grains.os != 'FreeBSD' %}
 limits_conf:
